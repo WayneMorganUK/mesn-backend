@@ -1,7 +1,6 @@
 require('dotenv').config()
 
 const ORIGIN = process.env.ORIGIN
-console.log('origin',ORIGIN)
 const express = require('express')
 const mongoose = require('mongoose')
 const workoutRoutes = require('./routes/workouts')
