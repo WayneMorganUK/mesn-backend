@@ -1,17 +1,14 @@
 require('dotenv').config()
 
-const ORIGIN = process.env.ORIGIN
 const express = require('express')
 const mongoose = require('mongoose')
 const workoutRoutes = require('./routes/workouts')
-const cors = require('cors');
+const userRoutes = require('./routes/user')
 
-// // express app
+// express app
 const app = express()
 
-
 // middleware
-app.use(cors({origin: ORIGIN}))
 app.use(express.json())
 
 app.use((req, res, next) => {
@@ -21,16 +18,16 @@ app.use((req, res, next) => {
 
 // routes
 app.use('/api/workouts', workoutRoutes)
+app.use('/api/user', userRoutes)
 
 // connect to db
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
-    console.log('connected to database')
-    // listen to port
+    // listen for requests
     app.listen(process.env.PORT, () => {
-      console.log('listening for requests on port', process.env.PORT)
+      console.log('connected to db & listening on port', process.env.PORT)
     })
   })
-  .catch((err) => {
-    console.log(err)
-  }) 
+  .catch((error) => {
+    console.log(error)
+  })
